@@ -8,17 +8,23 @@ const connect = function() {
 
   // interpret incoming data as text
   conn.setEncoding("utf8");
-  
-  conn.on("connect", (message) => {
-    console.log(message);
-  });
 
   conn.on("connect", () => {
     conn.write("Name: TCB");
   });
 
-  conn.on("data", () => {
-    console.log('Success!');
+  conn.on("connect", () => {
+    let timer = 0;
+    while (timer < 1000) {
+      setTimeout(() => {
+        conn.write("Move: left");
+      }, timer);
+      timer += 50;
+    }
+  });
+
+  conn.on("data", (message) => {
+    console.log(message);
   });
 
 
